@@ -2,6 +2,9 @@ package br.gov.fatec.WebServeTcc.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -11,7 +14,12 @@ import javax.persistence.Table;
 @Table(name = "DATA_REPARO")
 public class DataReparo {
 
-	@OneToMany(targetEntity = Os.class)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column
+	private int id;
+
+	@OneToOne(targetEntity = Os.class)
 	@JoinColumn(name = "ID_MANUTENTOR")
 	private Manutentor manutentor;
 
@@ -26,11 +34,20 @@ public class DataReparo {
 		super();
 	}
 
-	public DataReparo(Manutentor manutentor, Os os, String data) {
+	public DataReparo(int id, Manutentor manutentor, Os os, String data) {
 		super();
+		this.id = id;
 		this.manutentor = manutentor;
 		this.os = os;
 		this.data = data;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public Manutentor getManutentor() {
@@ -59,7 +76,7 @@ public class DataReparo {
 
 	@Override
 	public String toString() {
-		return "DataReparo [manutentor=" + manutentor + ", os=" + os + ", data=" + data + "]";
+		return "DataReparo [id=" + id + ", manutentor=" + manutentor + ", os=" + os + ", data=" + data + "]";
 	}
 
 }
