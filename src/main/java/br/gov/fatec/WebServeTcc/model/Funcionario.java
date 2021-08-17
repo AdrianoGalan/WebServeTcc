@@ -17,7 +17,7 @@ public class Funcionario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
-	private Integer matricula;
+	private int matricula;
 
 	@Column(name = "DATA_ADM")
 	private String dataAdm;
@@ -41,11 +41,11 @@ public class Funcionario {
 		this.pessoa = pessoa;
 	}
 
-	public Integer getMatricula() {
+	public int getMatricula() {
 		return matricula;
 	}
 
-	public void setMatricula(Integer matricula) {
+	public void setMatricula(int matricula) {
 		this.matricula = matricula;
 	}
 

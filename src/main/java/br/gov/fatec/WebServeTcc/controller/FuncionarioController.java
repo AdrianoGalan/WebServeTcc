@@ -34,8 +34,7 @@ public class FuncionarioController {
 	@GetMapping("/funcionario/{matricula}")
 	public Funcionario getFuncionarioByMatricula(@PathVariable(value = "matricula") int matricula) {
 
-		System.err.println("madricula "+ matricula);
-		Funcionario funcionario = fRep.getById(matricula);
+		Funcionario funcionario = fRep.findById(matricula).get();
 		return funcionario;
 
 	}
