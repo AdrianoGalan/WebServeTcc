@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import br.gov.fatec.WebServeTcc.model.Funcionario;
+import br.gov.fatec.WebServeTcc.model.Pessoa;
 import br.gov.fatec.WebServeTcc.repository.FuncionarioRepository;
+import br.gov.fatec.WebServeTcc.repository.PessoaRepository;
 
 @CrossOrigin
 @RestController
@@ -24,6 +26,9 @@ public class FuncionarioController {
 	
 	@Autowired
 	private FuncionarioRepository fRep;
+	
+	@Autowired 
+	private PessoaRepository pRep;
 	
 
 	@GetMapping("/funcionario")
@@ -45,7 +50,12 @@ public class FuncionarioController {
 	
 	@PostMapping("/funcionario")
 	public ResponseEntity<String> insertFuncionario(@Valid @RequestBody Funcionario f) {
-		System.out.println("pos " + f);
+		 
+		Pessoa p;
+		
+		p = pRep.save(f.getPessoa());
+		f.setPessoa(p);
+		
 		fRep.save(f);
 		return ResponseEntity.ok("Funcionario adicionado");
 
@@ -54,7 +64,6 @@ public class FuncionarioController {
 
 	@PutMapping("/funcionario")
 	public ResponseEntity<String> updatetFuncionario(@Valid @RequestBody Funcionario f) {
-		System.out.println("put " + f);
 		fRep.save(f);
 		return ResponseEntity.ok().body("Funcionario atualizado com sucesso");
 	}

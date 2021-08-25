@@ -5,10 +5,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.Table;
+
+
 
 @Entity
 @Table(name = "FUNCAO")
+@NamedNativeQuery(name = "Funcao.orderByNome", query = "SELECT ID, FUNCAO FROM FUNCAO ORDER BY FUNCAO", 
+				resultClass = Funcao.class)
 public class Funcao {
 
 	@Id
