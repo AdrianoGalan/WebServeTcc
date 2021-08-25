@@ -25,7 +25,7 @@ public class FuncionarioController {
 	@Autowired
 	private FuncionarioRepository fRep;
 	
-	@CrossOrigin
+
 	@GetMapping("/funcionario")
 	public List<Funcionario> getAllFuncionario() {
 
@@ -33,8 +33,7 @@ public class FuncionarioController {
 		return listaFuncionario;
 
 	}
-	
-	@CrossOrigin
+
 	@GetMapping("/funcionario/{matricula}")
 	public Funcionario getFuncionarioByMatricula(@PathVariable(value = "matricula") int matricula) {
 
@@ -43,8 +42,8 @@ public class FuncionarioController {
 
 	}
 	
-	@CrossOrigin
-	@PostMapping("/funcionario/add")
+	
+	@PostMapping("/funcionario")
 	public ResponseEntity<String> insertFuncionario(@Valid @RequestBody Funcionario f) {
 		System.out.println("pos " + f);
 		fRep.save(f);
@@ -52,8 +51,8 @@ public class FuncionarioController {
 
 	}
 	
-	@CrossOrigin
-	@PutMapping("/funcionario/atualizar")
+
+	@PutMapping("/funcionario")
 	public ResponseEntity<String> updatetFuncionario(@Valid @RequestBody Funcionario f) {
 		System.out.println("put " + f);
 		fRep.save(f);

@@ -22,8 +22,9 @@ public class Funcionario {
 	@Column(name = "DATA_ADM")
 	private String dataAdm;
 
-	@Column
-	private String funcao;
+	@OneToOne(targetEntity = Funcao.class)
+	@JoinColumn(name = "ID_FUNCAO")
+	private Funcao funcao;
 
 	@OneToOne(targetEntity = Pessoa.class)
 	@JoinColumn(name = "ID_PESSOA")
@@ -33,7 +34,7 @@ public class Funcionario {
 		super();
 	}
 
-	public Funcionario(int matricula, String dataAdm, String funcao, Pessoa pessoa) {
+	public Funcionario(int matricula, String dataAdm, Funcao funcao, Pessoa pessoa) {
 		super();
 		this.matricula = matricula;
 		this.dataAdm = dataAdm;
@@ -57,11 +58,11 @@ public class Funcionario {
 		this.dataAdm = dataAdm;
 	}
 
-	public String getFuncao() {
+	public Funcao getFuncao() {
 		return funcao;
 	}
 
-	public void setFuncao(String funcao) {
+	public void setFuncao(Funcao funcao) {
 		this.funcao = funcao;
 	}
 
