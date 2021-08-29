@@ -4,11 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "FUNCIONARIO")
+@Table(name = "USUARIO")
+@NamedNativeQuery(name = "Usuario.deleteByLogin", query = "DELETE from usuario WHERE login = (?1)")
 public class Usuario {
 
 	@Id
