@@ -11,6 +11,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "USUARIO")
 @NamedNativeQuery(name = "Usuario.deleteByLogin", query = "DELETE from usuario WHERE login = (?1)")
+@NamedNativeQuery(name = "Usuario.findAllByLogin", query = "SELECT LOGIN, SENHA, PERMISSAO, MATRICULA_FUNCIONARIO FROM USUARIO"
+		+ " WHERE login = (?1)", 
+resultClass = Usuario.class)
 public class Usuario {
 
 	@Id
