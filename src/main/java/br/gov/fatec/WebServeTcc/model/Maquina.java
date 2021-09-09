@@ -15,6 +15,7 @@ public class Maquina {
 	@Column
 	private String sigla;
 
+	@Column(name = "DATA_COMPRA")
 	private String dataCompra;
 
 	@OneToOne(targetEntity = Fabricante.class)

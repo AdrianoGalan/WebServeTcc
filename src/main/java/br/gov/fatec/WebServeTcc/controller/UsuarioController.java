@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.gov.fatec.WebServeTcc.model.Funcionario;
 import br.gov.fatec.WebServeTcc.model.Usuario;
 import br.gov.fatec.WebServeTcc.repository.UsuarioRepository;
 
@@ -36,7 +35,7 @@ public class UsuarioController {
 
 	}
 	
-	@CrossOrigin
+	
 	@DeleteMapping("/usuario/delete{login}")
 	public ResponseEntity<String> deleteUsuario(@PathVariable(value = "login") Usuario u) {
 		System.err.println(u);
@@ -70,8 +69,7 @@ public class UsuarioController {
 
 	}
 	
-	@CrossOrigin
-	@GetMapping("/usuario/valigar")
+	@PostMapping("/usuario/valigar")
 	public boolean validar(@Valid @RequestBody Usuario u) {
 
 		Usuario usuario = uRep.findAllByLogin(u.getLogin());
