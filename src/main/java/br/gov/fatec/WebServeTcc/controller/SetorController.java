@@ -40,7 +40,7 @@ public class SetorController {
 	
 
 	@PutMapping("/setor")
-	public ResponseEntity<String> updatetFuncao(@Valid @RequestBody Setor s) {
+	public ResponseEntity<String> updatetSetor(@Valid @RequestBody Setor s) {
 	
 		sRep.save(s);
 		return ResponseEntity.ok().body("Setor atualizado com sucesso");
