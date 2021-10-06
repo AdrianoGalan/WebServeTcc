@@ -38,21 +38,25 @@ public class Os {
 
 	@Column(name = "STATUS_OS")
 	private String statusOs;
+	
+	@Column(name = "OFICINA")
+	private String oficina;
 
 	@OneToOne(targetEntity = Maquina.class)
 	@JoinColumn(name = "SIGLA_MAQUINA")
 	private Maquina maquina;
 
-	@OneToOne(targetEntity = Manutentor.class)
+	@OneToOne(targetEntity = Funcionario.class)
 	@JoinColumn(name = "ID_MANUTENTOR")
-	private Manutentor manutentorResponsavel;
+	private Funcionario manutentorResponsavel;
 
 	public Os() {
 		super();
 	}
 
 	public Os(int id, String dataGerada, String problema, String dataIniManutencao, String dataFimManutencao,
-			String defeito, String reparo, String statusOs, Maquina maquina, Manutentor manutentorResponsavel) {
+			String defeito, String reparo, String statusOs, String oficina, Maquina maquina,
+			Funcionario manutentorResponsavel) {
 		super();
 		this.id = id;
 		this.dataGerada = dataGerada;
@@ -62,6 +66,7 @@ public class Os {
 		this.defeito = defeito;
 		this.reparo = reparo;
 		this.statusOs = statusOs;
+		this.oficina = oficina;
 		this.maquina = maquina;
 		this.manutentorResponsavel = manutentorResponsavel;
 	}
@@ -130,6 +135,14 @@ public class Os {
 		this.statusOs = statusOs;
 	}
 
+	public String getOficina() {
+		return oficina;
+	}
+
+	public void setOficina(String oficina) {
+		this.oficina = oficina;
+	}
+
 	public Maquina getMaquina() {
 		return maquina;
 	}
@@ -138,11 +151,11 @@ public class Os {
 		this.maquina = maquina;
 	}
 
-	public Manutentor getManutentorResponsavel() {
+	public Funcionario getManutentorResponsavel() {
 		return manutentorResponsavel;
 	}
 
-	public void setManutentorResponsavel(Manutentor manutentorResponsavel) {
+	public void setManutentorResponsavel(Funcionario manutentorResponsavel) {
 		this.manutentorResponsavel = manutentorResponsavel;
 	}
 
@@ -150,8 +163,10 @@ public class Os {
 	public String toString() {
 		return "Os [id=" + id + ", dataGerada=" + dataGerada + ", problema=" + problema + ", dataIniManutencao="
 				+ dataIniManutencao + ", dataFimManutencao=" + dataFimManutencao + ", defeito=" + defeito + ", reparo="
-				+ reparo + ", statusOs=" + statusOs + ", maquina=" + maquina + ", manutentorResponsavel="
-				+ manutentorResponsavel + "]";
+				+ reparo + ", statusOs=" + statusOs + ", oficina=" + oficina + ", maquina=" + maquina
+				+ ", manutentorResponsavel=" + manutentorResponsavel + "]";
 	}
+
+	
 
 }

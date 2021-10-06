@@ -20,7 +20,7 @@ public class DataReparo {
 
 	@OneToOne(targetEntity = Os.class)
 	@JoinColumn(name = "ID_MANUTENTOR")
-	private Manutentor manutentor;
+	private Funcionario manutentor;
 
 	@OneToOne(targetEntity = Os.class)
 	@JoinColumn(name = "ID_OS")
@@ -33,7 +33,7 @@ public class DataReparo {
 		super();
 	}
 
-	public DataReparo(int id, Manutentor manutentor, Os os, String data) {
+	public DataReparo(int id, Funcionario manutentor, Os os, String data) {
 		super();
 		this.id = id;
 		this.manutentor = manutentor;
@@ -49,11 +49,11 @@ public class DataReparo {
 		this.id = id;
 	}
 
-	public Manutentor getManutentor() {
+	public Funcionario getManutentor() {
 		return manutentor;
 	}
 
-	public void setManutentor(Manutentor manutentor) {
+	public void setManutentor(Funcionario manutentor) {
 		this.manutentor = manutentor;
 	}
 
