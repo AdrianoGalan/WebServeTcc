@@ -2,7 +2,6 @@ package br.gov.fatec.WebServeTcc.controller;
 
 import java.util.List;
 
-import javax.print.attribute.standard.PresentationDirection;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
