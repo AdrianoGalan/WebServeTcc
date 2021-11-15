@@ -10,8 +10,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "USUARIO")
-@NamedNativeQuery(name = "Usuario.deleteByLogin", query = "DELETE from usuario WHERE login = (?1)")
-@NamedNativeQuery(name = "Usuario.findAllByLogin", query = "SELECT LOGIN, SENHA, PERMISSAO, MATRICULA_FUNCIONARIO FROM USUARIO"
+@NamedNativeQuery(name = "Usuario.findAllActive", query = "SELECT LOGIN, SENHA, PERMISSAO, STATUS, MATRICULA_FUNCIONARIO FROM USUARIO "
+		+ " WHERE STATUS = 'A' ", resultClass = Usuario.class)
+@NamedNativeQuery(name = "Usuario.findAllByLogin", query = "SELECT LOGIN, SENHA, PERMISSAO, STATUS, MATRICULA_FUNCIONARIO FROM USUARIO"
 		+ " WHERE login = (?1)", 
 resultClass = Usuario.class)
 public class Usuario {
@@ -25,6 +26,9 @@ public class Usuario {
 
 	@Column
 	private int permissao;
+	
+	@Column
+	private String status;
 
 	@OneToOne(targetEntity = Funcionario.class)
 	@JoinColumn(name = "MATRICULA_FUNCIONARIO")
@@ -34,11 +38,12 @@ public class Usuario {
 		super();
 	}
 
-	public Usuario(String login, String senha, int permissao, Funcionario funcionario) {
+	public Usuario(String login, String senha, int permissao, String status, Funcionario funcionario) {
 		super();
 		this.login = login;
 		this.senha = senha;
 		this.permissao = permissao;
+		this.status = status;
 		this.funcionario = funcionario;
 	}
 
@@ -66,6 +71,14 @@ public class Usuario {
 		this.permissao = permissao;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}
@@ -76,8 +89,10 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return "Usuario [login=" + login + ", senha=" + senha + ", permissao=" + permissao + ", funcionario="
-				+ funcionario + "]";
+		return "Usuario [login=" + login + ", senha=" + senha + ", permissao=" + permissao + ", status=" + status
+				+ ", funcionario=" + funcionario + "]";
 	}
+
+	
 
 }

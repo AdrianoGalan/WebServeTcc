@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,22 +31,25 @@ public class UsuarioController {
 	@GetMapping("/usuario")
 	public List<Usuario> getAllUsuario() {
 
-		List<Usuario> listaUsuario = uRep.findAll();
+		List<Usuario> listaUsuario = uRep.findAllActive();
 		return listaUsuario;
 
 	}
 	
 	
-	@DeleteMapping("/usuario/delete{login}")
-	public ResponseEntity<String> deleteUsuario(@PathVariable(value = "login") Usuario u) {
-		System.err.println(u);
-		uRep.delete(u);
-		return ResponseEntity.ok().body("Usuario deletado com sucesso");
+	@PutMapping("/usuario/delete")
+	public ResponseEntity<String> deleteUsuario(@Valid @RequestBody Usuario u) {
+		
+        u.setStatus("I");
+		
+		uRep.save(u);
+		return ResponseEntity.ok("usuario Deletado");		
 	}
 	
 	@PostMapping("/usuario")
 	public ResponseEntity<String> insertUsuario(@Valid @RequestBody Usuario u) {
 		
+		u.setStatus("A");
 		
 		uRep.save(u);
 		return ResponseEntity.ok("usuario adicionado");
