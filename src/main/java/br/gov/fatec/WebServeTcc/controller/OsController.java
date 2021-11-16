@@ -23,31 +23,32 @@ import br.gov.fatec.WebServeTcc.repository.OsRepository;
 @RestController
 @RequestMapping("/")
 public class OsController {
-	
+
 	@Autowired
 	private OsRepository oRep;
-	
+
 	@GetMapping("/os")
 	public List<Os> getAllos() {
-				
-	   	List<Os> listaOs = oRep.findAll();
+
+		List<Os> listaOs = oRep.findAll();
 		return listaOs;
 
 	}
-	
+
 	@PostMapping("/os")
 	public ResponseEntity<String> insertOs(@Valid @RequestBody Os os) {
-		
+
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		os.setDataGerada(dtf.format(LocalDateTime.now()));
-			
-		os.setStatusOs("A");
-			
+
+		if (!os.getStatusOs().equalsIgnoreCase("C")) {
+			os.setStatusOs("A");
+		}
 		oRep.save(os);
 		return ResponseEntity.ok("Os adicionado");
 
 	}
-	
+
 	@GetMapping("/os/{id}")
 	public Os getOSbyId(@PathVariable(value = "id") int id) {
 
