@@ -73,14 +73,23 @@ public class UsuarioController {
 
 	}
 	
-	@PostMapping("/usuario/valigar")
-	public boolean validar(@Valid @RequestBody Usuario u) {
+	@PostMapping("/usuario/validar")
+	public Usuario validar(@Valid @RequestBody Usuario u) {
 
+		
+		
 		Usuario usuario = uRep.findAllByLogin(u.getLogin());
-		if(usuario != null && usuario.getSenha() == u.getSenha()) {
-			return true;
+		
+	
+		
+		if(usuario != null && usuario.getSenha().equals(u.getSenha())) {
+		
+		 usuario.setSenha("");
+			
+			return usuario;
 		}
-		return false;
+		
+		return null;
 
 	}
 
