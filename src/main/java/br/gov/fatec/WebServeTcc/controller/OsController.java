@@ -30,7 +30,7 @@ public class OsController {
 	@GetMapping("/os")
 	public List<Os> getAllos() {
 
-		List<Os> listaOs = oRep.findAll();
+		List<Os> listaOs = oRep.osAtiva();
 		return listaOs;
 
 	}
@@ -41,9 +41,6 @@ public class OsController {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		os.setDataGerada(dtf.format(LocalDateTime.now()));
 
-		if (!os.getStatusOs().equalsIgnoreCase("C")) {
-			os.setStatusOs("A");
-		}
 		oRep.save(os);
 		return ResponseEntity.ok("Os adicionado");
 

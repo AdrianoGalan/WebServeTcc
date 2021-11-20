@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import br.gov.fatec.WebServeTcc.model.Funcionario;
 import br.gov.fatec.WebServeTcc.model.Pessoa;
+import br.gov.fatec.WebServeTcc.model.Usuario;
 import br.gov.fatec.WebServeTcc.repository.FuncionarioRepository;
 import br.gov.fatec.WebServeTcc.repository.PessoaRepository;
 
@@ -23,18 +24,17 @@ import br.gov.fatec.WebServeTcc.repository.PessoaRepository;
 @RestController
 @RequestMapping("/")
 public class FuncionarioController {
-	
+
 	@Autowired
 	private FuncionarioRepository fRep;
-	
-	@Autowired 
+
+	@Autowired
 	private PessoaRepository pRep;
-	
 
 	@GetMapping("/funcionario")
 	public List<Funcionario> getAllFuncionario() {
 
-		List<Funcionario> listaFuncionario = fRep.findAll();
+		List<Funcionario> listaFuncionario = fRep.funcionarioAtivo();
 		return listaFuncionario;
 
 	}
@@ -46,27 +46,34 @@ public class FuncionarioController {
 		return funcionario;
 
 	}
-	
-	
+
 	@PostMapping("/funcionario")
 	public ResponseEntity<String> insertFuncionario(@Valid @RequestBody Funcionario f) {
-		 
+
 		Pessoa p;
-		
+
 		p = pRep.save(f.getPessoa());
 		f.setPessoa(p);
-		
+
 		fRep.save(f);
 		return ResponseEntity.ok("Funcionario adicionado");
 
 	}
-	
+
+	@PutMapping("/funcionario/delete")
+	public ResponseEntity<String> deleteUsuario(@Valid @RequestBody Funcionario f) {
+
+		f.setStatus("I");
+
+		fRep.save(f);
+		return ResponseEntity.ok("Funcionario Deletado");
+	}
 
 	@PutMapping("/funcionario")
 	public ResponseEntity<String> updatetFuncionario(@Valid @RequestBody Funcionario f) {
-		
+
 		pRep.save(f.getPessoa());
-		
+
 		fRep.save(f);
 		return ResponseEntity.ok().body("Funcionario atualizado com sucesso");
 	}

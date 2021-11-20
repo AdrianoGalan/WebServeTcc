@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import br.gov.fatec.WebServeTcc.model.Funcionario;
 import br.gov.fatec.WebServeTcc.model.Maquina;
 import br.gov.fatec.WebServeTcc.repository.MaquinaRepository;
 
@@ -36,7 +37,7 @@ public class MaquinaController {
 	@GetMapping("/maquina")
 	public List<Maquina> getAllMaquina() {
 
-		List<Maquina> listaMaquina = mRep.findAll();
+		List<Maquina> listaMaquina = mRep.maquinaAtiva();
 		return listaMaquina;
 
 	}
@@ -44,7 +45,6 @@ public class MaquinaController {
 	@PostMapping("/maquina")
 	public ResponseEntity<String> insertMaquina(@Valid @RequestBody Maquina m) {
 		
-			
 		mRep.save(m);
 		return ResponseEntity.ok("Maquina adicionado");
 
@@ -58,13 +58,22 @@ public class MaquinaController {
 
 	}
 	
+	@PutMapping("/maquina/delete")
+	public ResponseEntity<String> deleteUsuario(@Valid @RequestBody Maquina m) {
+
+		m.setStatus("I");
+
+		mRep.save(m);
+		return ResponseEntity.ok("maquina Deletado");
+	}
+
+	
 	@GetMapping("/maquina/previsao/{sigla}")
 	public void previsaoMaquina( HttpServletResponse response, @PathVariable(value = "sigla") String sigla) throws IOException{
 		
-		//File file = new File("/WebServeTcc/src/main/resources/previsao/gua.xlsx");
-		String diretorio = "/home/adriano/Downloads/";
+		String diretorio = "classpath:previsao/";
 		String sufixo = ".xlsx";
-		
+				
 		File file = ResourceUtils.getFile(diretorio.concat(sigla).concat(sufixo));
 		
 		byte[] bytes =  Files.readAllBytes(file.toPath());

@@ -6,11 +6,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "OS")
+@NamedNativeQuery(name = "Os.osAtiva", query = "SELECT    ID,  DATA_GERADA,  PROBLEMA,  DATA_INI_MANUT,  DATA_FIM_MANUT,  DEFEITO,  REPARO,  STATUS_OS,  OFICINA,  SIGLA_MAQUINA,  ID_MANUTENTOR  "
+		+ "  FROM  OS  "
+		+ "  WHERE STATUS_OS = 'A' ", resultClass = Os.class)
 public class Os {
 
 	@Id
