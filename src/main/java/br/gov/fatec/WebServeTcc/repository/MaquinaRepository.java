@@ -10,5 +10,6 @@ import br.gov.fatec.WebServeTcc.model.Maquina;
 public interface MaquinaRepository  extends JpaRepository<Maquina, String> {
 	
 	List<Maquina> maquinaAtiva();
+	List<Maquina> buscaMaquina(String sigla);
 
 }

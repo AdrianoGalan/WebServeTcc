@@ -42,6 +42,14 @@ public class MaquinaController {
 
 	}
 	
+	@GetMapping("/maquina/busca/{sigla}")
+	public List<Maquina> getBuscaMaquina(@PathVariable(value = "sigla") String sigla) {
+
+		List<Maquina> listaMaquina = mRep.buscaMaquina(sigla);
+		return listaMaquina;
+
+	}
+	
 	@PostMapping("/maquina")
 	public ResponseEntity<String> insertMaquina(@Valid @RequestBody Maquina m) {
 		
