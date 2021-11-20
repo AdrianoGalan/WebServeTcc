@@ -9,4 +9,6 @@ import br.gov.fatec.WebServeTcc.model.Funcionario;
 public interface FuncionarioRepository  extends JpaRepository<Funcionario, Integer> {
 
 	List<Funcionario> funcionarioAtivo();
+	List<Funcionario> buscaFuncionario(int matricula);
+	List<Funcionario> buscaFuncionarioNome(String nome);
 }

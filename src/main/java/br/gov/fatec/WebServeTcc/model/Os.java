@@ -15,6 +15,14 @@ import javax.persistence.Table;
 @NamedNativeQuery(name = "Os.osAtiva", query = "SELECT    ID,  DATA_GERADA,  PROBLEMA,  DATA_INI_MANUT,  DATA_FIM_MANUT,  DEFEITO,  REPARO,  STATUS_OS,  OFICINA,  SIGLA_MAQUINA,  ID_MANUTENTOR  "
 		+ "  FROM  OS  "
 		+ "  WHERE STATUS_OS = 'A' ", resultClass = Os.class)
+
+@NamedNativeQuery(name = "Os.buscaOsId", query = "SELECT    ID,  DATA_GERADA,  PROBLEMA,  DATA_INI_MANUT,  DATA_FIM_MANUT,  DEFEITO,  REPARO,  STATUS_OS,  OFICINA,  SIGLA_MAQUINA,  ID_MANUTENTOR  "
+		+ "  FROM  OS  "
+		+ "  WHERE ID LIKE CONCAT(?1,'%') ", resultClass = Os.class)
+
+@NamedNativeQuery(name = "Os.buscaOsSigla", query = "SELECT    ID,  DATA_GERADA,  PROBLEMA,  DATA_INI_MANUT,  DATA_FIM_MANUT,  DEFEITO,  REPARO,  STATUS_OS,  OFICINA,  SIGLA_MAQUINA,  ID_MANUTENTOR  "
+		+ "  FROM  OS  "
+		+ "  WHERE SIGLA_MAQUINA LIKE CONCAT('%', ?1,'%') ", resultClass = Os.class)
 public class Os {
 
 	@Id

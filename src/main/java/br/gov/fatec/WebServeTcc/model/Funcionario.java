@@ -16,6 +16,16 @@ import javax.persistence.Table;
 @NamedNativeQuery(name = "Funcionario.funcionarioAtivo", query = "SELECT  MATRICULA, DATA_ADM, ID_FUNCAO, MANUTENTOR, STATUS, ID_PESSOA "
 		+ "  FROM FUNCIONARIO "
 		+ "  WHERE STATUS = 'A' " , resultClass = Funcionario.class)
+
+@NamedNativeQuery(name = "Funcionario.buscaFuncionario", query = "SELECT  MATRICULA, DATA_ADM, ID_FUNCAO, MANUTENTOR, STATUS, ID_PESSOA "
+		+ "  FROM FUNCIONARIO "
+		+ "  WHERE MATRICULA LIKE CONCAT(?1,'%') " , resultClass = Funcionario.class)
+
+@NamedNativeQuery(name = "Funcionario.buscaFuncionarioNome", query = "SELECT  MATRICULA, DATA_ADM, ID_FUNCAO, MANUTENTOR, STATUS, ID_PESSOA  "
+		+ "		    FROM FUNCIONARIO f "
+		+ "         INNER JOIN PESSOA p "
+		+ "         ON  f.ID_PESSOA = p.ID "
+		+ "		    WHERE p.NOME LIKE CONCAT('%', ?1,'%') " , resultClass = Funcionario.class)
 public class Funcionario {
 
 	@Id

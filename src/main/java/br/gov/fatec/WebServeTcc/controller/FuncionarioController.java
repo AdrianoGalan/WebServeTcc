@@ -38,6 +38,26 @@ public class FuncionarioController {
 		return listaFuncionario;
 
 	}
+	
+	@GetMapping("/funcionario/busca/{?}")
+	public List<Funcionario> getBuscaFuncionario(@PathVariable(value = "?") String parametro) {
+
+		int matricula;
+		
+		try {
+			
+			matricula = Integer.parseInt(parametro);
+			List<Funcionario> listaFuncionario = fRep.buscaFuncionario(matricula);
+			return listaFuncionario;
+		} catch (Exception e) {
+			
+			List<Funcionario> listaFuncionario = fRep.buscaFuncionarioNome(parametro);
+			return listaFuncionario;
+		}
+		
+		
+
+	}
 
 	@GetMapping("/funcionario/{matricula}")
 	public Funcionario getFuncionarioByMatricula(@PathVariable(value = "matricula") int matricula) {

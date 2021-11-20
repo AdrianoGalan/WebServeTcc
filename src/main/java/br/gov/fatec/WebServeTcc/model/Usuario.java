@@ -12,9 +12,12 @@ import javax.persistence.Table;
 @Table(name = "USUARIO")
 @NamedNativeQuery(name = "Usuario.findAllActive", query = "SELECT LOGIN, SENHA, PERMISSAO, STATUS, MATRICULA_FUNCIONARIO FROM USUARIO "
 		+ " WHERE STATUS = 'A' ", resultClass = Usuario.class)
+
 @NamedNativeQuery(name = "Usuario.findAllByLogin", query = "SELECT LOGIN, SENHA, PERMISSAO, STATUS, MATRICULA_FUNCIONARIO FROM USUARIO"
-		+ " WHERE login = (?1)", 
-resultClass = Usuario.class)
+		+ " WHERE login = ?1 ", resultClass = Usuario.class)
+
+@NamedNativeQuery(name = "Usuario.buscaUsuarioLogin", query = "SELECT LOGIN, SENHA, PERMISSAO, STATUS, MATRICULA_FUNCIONARIO FROM USUARIO"
+		+ " WHERE login LIKE CONCAT('%', ?1,'%')", resultClass = Usuario.class)
 public class Usuario {
 
 	@Id

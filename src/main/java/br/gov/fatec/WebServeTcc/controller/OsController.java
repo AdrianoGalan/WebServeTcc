@@ -34,6 +34,27 @@ public class OsController {
 		return listaOs;
 
 	}
+	
+	@GetMapping("/os/busca/{?}")
+	public List<Os> getBuscaOs(@PathVariable(value = "?") String parametro) {
+
+		int id;
+		
+		try {
+			
+			id = Integer.parseInt(parametro);
+			List<Os> listaOs = oRep.buscaOsId(id);
+			return listaOs;
+			
+		} catch (Exception e) {
+			
+			List<Os> listaOs = oRep.buscaOsSigla(parametro);
+			return listaOs;
+		}
+		
+		
+
+	}
 
 	@PostMapping("/os")
 	public ResponseEntity<String> insertOs(@Valid @RequestBody Os os) {

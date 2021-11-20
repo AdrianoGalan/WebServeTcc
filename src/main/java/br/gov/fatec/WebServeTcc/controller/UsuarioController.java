@@ -36,6 +36,15 @@ public class UsuarioController {
 
 	}
 	
+	@GetMapping("/usuario/busca/{login}")
+	public List<Usuario> buscaUsuarioLogin(@PathVariable(value = "login") String login) {
+
+		List<Usuario> listaUsuario = uRep.buscaUsuarioLogin(login);
+		return listaUsuario;
+
+	}
+	
+	
 	
 	@PutMapping("/usuario/delete")
 	public ResponseEntity<String> deleteUsuario(@Valid @RequestBody Usuario u) {

@@ -16,7 +16,7 @@ import javax.persistence.Table;
 resultClass = Maquina.class)
 @NamedNativeQuery(name = "Maquina.buscaMaquina", query = "SELECT SIGLA, DATA_COMPRA, STATUS, ID_FABRICANTE, ID_SETOR "
 		+ "		 FROM MAQUINA "
-		+ "		 WHERE SIGLA LIKE CONCAT(?1,'%')", resultClass = Maquina.class)
+		+ "		 WHERE SIGLA LIKE CONCAT('%', ?1,'%')", resultClass = Maquina.class)
 public class Maquina {
 
 	@Id
