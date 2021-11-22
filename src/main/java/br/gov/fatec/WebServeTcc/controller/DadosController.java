@@ -2,6 +2,7 @@ package br.gov.fatec.WebServeTcc.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.fatec.WebServeTcc.model.Dados;
+import br.gov.fatec.WebServeTcc.model.Funcionario;
+import br.gov.fatec.WebServeTcc.model.Maquina;
+import br.gov.fatec.WebServeTcc.model.Os;
 import br.gov.fatec.WebServeTcc.repository.DadosRepository;
+import br.gov.fatec.WebServeTcc.repository.OsRepository;
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
@@ -23,13 +28,16 @@ import jxl.read.biff.BiffException;
 public class DadosController {
 
 	@Autowired
-	private DadosRepository dRep;
+	private OsRepository oRep;
 
 	@GetMapping("/dados")
 	public ResponseEntity<String> salvar() {
+		
+		
+		Random gerador = new Random();
 
 		try {
-			Workbook workbook = Workbook.getWorkbook(new File("/home/adriano/Documentos/10Anos.xls"));
+			Workbook workbook = Workbook.getWorkbook(new File("/home/adriano/Documentos/Fatec/Tcc/10Anos.xls"));
 
 			Sheet sheet = workbook.getSheet(0);
 			int linhas = sheet.getRows();
@@ -45,10 +53,13 @@ public class DadosController {
 			String as3;
 
 			String as4;
-
+							//12906
 			for (int i = 0; i < 12906; i++) {
 
-				Dados dados = new Dados();
+				Os os = new Os();
+				Maquina maquina  = new Maquina();
+				Funcionario funcionario = new Funcionario();
+				
 
 				Cell a1 = sheet.getCell(0, i);
 
@@ -89,14 +100,21 @@ public class DadosController {
 					as3 = mes + "-" + dia + "-" + ano;
 				}
 
-				dados.setMaquina(as1);
-				dados.setDefeito(as2);
-				dados.setData(as3);
-				dados.setOficina(as4);
+				maquina.setSigla(as1);
+				funcionario.setMatricula(gerador.nextInt(3) + 1);
+				
+				os.setDataGerada(as3);
+				os.setProblema(as2);
+				os.setDefeito(as2);
+				os.setReparo("Feito reparo do " +as2);
+				os.setStatusOs("C");
+				os.setOficina(as4);
+				os.setMaquina(maquina);
+				os.setManutentorResponsavel(funcionario);
 
-				System.out.println(dados + "/////" + i);
-
-				dRep.save(dados);
+				oRep.save(os);
+				
+				//dRep.save(dados);
 
 			}
 
