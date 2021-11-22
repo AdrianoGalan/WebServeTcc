@@ -14,8 +14,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "FUNCIONARIO")
 @NamedNativeQuery(name = "Funcionario.funcionarioAtivo", query = "SELECT  MATRICULA, DATA_ADM, ID_FUNCAO, MANUTENTOR, STATUS, ID_PESSOA "
-		+ "  FROM FUNCIONARIO "
-		+ "  WHERE STATUS = 'A' " , resultClass = Funcionario.class)
+		+ "  FROM FUNCIONARIO f "
+		+ "  INNER JOIN PESSOA p "
+		+ "  ON  f.ID_PESSOA = p.ID "
+		+ "  WHERE f.STATUS = 'A' " 
+		+ "  ORDER by p.NOME", resultClass = Funcionario.class)
 
 @NamedNativeQuery(name = "Funcionario.buscaFuncionario", query = "SELECT  MATRICULA, DATA_ADM, ID_FUNCAO, MANUTENTOR, STATUS, ID_PESSOA "
 		+ "  FROM FUNCIONARIO "
@@ -25,7 +28,7 @@ import javax.persistence.Table;
 		+ "		    FROM FUNCIONARIO f "
 		+ "         INNER JOIN PESSOA p "
 		+ "         ON  f.ID_PESSOA = p.ID "
-		+ "		    WHERE p.NOME LIKE CONCAT('%', ?1,'%') " , resultClass = Funcionario.class)
+		+ "		    WHERE p.NOME LIKE CONCAT('%', ?1,'%') ", resultClass = Funcionario.class)
 public class Funcionario {
 
 	@Id
