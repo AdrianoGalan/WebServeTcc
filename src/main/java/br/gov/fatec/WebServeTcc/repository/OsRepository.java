@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.gov.fatec.WebServeTcc.model.Funcionario;
 import br.gov.fatec.WebServeTcc.model.Os;
 
 
