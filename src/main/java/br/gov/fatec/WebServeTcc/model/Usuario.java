@@ -8,6 +8,8 @@ import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+
+
 @Entity
 @Table(name = "USUARIO")
 @NamedNativeQuery(name = "Usuario.findAllActive", query = "SELECT LOGIN, SENHA, PERMISSAO, STATUS, MATRICULA_FUNCIONARIO FROM USUARIO "

@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,10 +25,13 @@ import br.gov.fatec.WebServeTcc.repository.UsuarioRepository;
 @RestController
 @RequestMapping("/")
 public class UsuarioController {
-	
+
 	@Autowired
 	private UsuarioRepository uRep;
-	
+
+	@Autowired
+	private BCryptPasswordEncoder pe;
+
 	@GetMapping("/usuario")
 	public List<Usuario> getAllUsuario() {
 
@@ -35,7 +39,7 @@ public class UsuarioController {
 		return listaUsuario;
 
 	}
-	
+
 	@GetMapping("/usuario/busca/{login}")
 	public List<Usuario> buscaUsuarioLogin(@PathVariable(value = "login") String login) {
 
@@ -43,61 +47,56 @@ public class UsuarioController {
 		return listaUsuario;
 
 	}
-	
-	
-	
+
 	@PutMapping("/usuario/delete")
 	public ResponseEntity<String> deleteUsuario(@Valid @RequestBody Usuario u) {
-		
-        u.setStatus("I");
-		
+
+		u.setStatus("I");
+
 		uRep.save(u);
-		return ResponseEntity.ok("usuario Deletado");		
+		return ResponseEntity.ok("usuario Deletado");
 	}
-	
+
 	@PostMapping("/usuario")
 	public ResponseEntity<String> insertUsuario(@Valid @RequestBody Usuario u) {
-		
+
+		u.setSenha(pe.encode(u.getSenha()));
+
 		u.setStatus("A");
-		
+
 		uRep.save(u);
 		return ResponseEntity.ok("usuario adicionado");
 
 	}
-	
+
 	@PutMapping("/usuario")
 	public ResponseEntity<String> atualizartUsuario(@Valid @RequestBody Usuario u) {
-		
-		
+
 		uRep.save(u);
 		return ResponseEntity.ok("usuario atualizado");
 
 	}
-	
+
 	@GetMapping("/usuario/{login}")
 	public Usuario getFuncionarioByMatricula(@PathVariable(value = "login") String login) {
 
-		Usuario usuario = uRep.findAllByLogin(login);
-		return usuario;
+		return uRep.findAllByLogin(login);
+	
 
 	}
-	
+
 	@PostMapping("/usuario/validar")
 	public Usuario validar(@Valid @RequestBody Usuario u) {
 
-		
-		
 		Usuario usuario = uRep.findAllByLogin(u.getLogin());
-		
-	
-		
-		if(usuario != null && usuario.getSenha().equals(u.getSenha())) {
-		
-		 usuario.setSenha("");
-			
+
+		if (usuario != null && usuario.getSenha().equals(u.getSenha())) {
+
+			usuario.setSenha("");
+
 			return usuario;
 		}
-		
+
 		return null;
 
 	}
