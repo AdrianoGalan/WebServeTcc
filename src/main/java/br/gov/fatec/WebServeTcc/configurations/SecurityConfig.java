@@ -17,6 +17,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import br.gov.fatec.WebServeTcc.security.JWTAuthenticationFilter;
+import br.gov.fatec.WebServeTcc.security.JWTAuthorizationFilter;
 import br.gov.fatec.WebServeTcc.security.JWTUtil;
 
 @Configuration
@@ -28,12 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JWTUtil jwtUtil;
-  
 
     private static final String[] PUBLIC_MATCHERS_GET = {
-            "/funcionario/**",
-            "/fabricante/**",
-            "/pessoa/**",
             "/usuario/**"
 
     };
@@ -44,20 +41,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable();
 
         http.authorizeRequests()
-                .antMatchers( PUBLIC_MATCHERS_GET).permitAll()
+                .antMatchers(PUBLIC_MATCHERS_GET).permitAll()
                 .anyRequest().authenticated();
 
         http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+        http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-
-        
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
-        
+
     }
 
     @Bean
@@ -68,8 +64,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder (){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
-        
+
     }
 }
