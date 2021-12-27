@@ -16,12 +16,18 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import br.gov.fatec.WebServeTcc.security.JWTAuthenticationFilter;
+import br.gov.fatec.WebServeTcc.security.JWTUtil;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private JWTUtil jwtUtil;
   
 
     private static final String[] PUBLIC_MATCHERS_GET = {
@@ -41,6 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers( PUBLIC_MATCHERS_GET).permitAll()
                 .anyRequest().authenticated();
 
+        http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 

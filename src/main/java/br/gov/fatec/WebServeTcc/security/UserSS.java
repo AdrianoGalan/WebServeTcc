@@ -3,10 +3,7 @@ package br.gov.fatec.WebServeTcc.security;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import br.gov.fatec.WebServeTcc.enums.Permissao;
 
 public class UserSS implements UserDetails {
 
@@ -20,11 +17,7 @@ public class UserSS implements UserDetails {
         this.senha = senha;
         this.authorities = null;
 
-        
-      
     }
-
-
 
     public int getId() {
         return id;
